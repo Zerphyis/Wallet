@@ -1,18 +1,21 @@
 package dev.Zerphyis.wallet.Domain.Entitys;
 
+import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
+import dev.Zerphyis.wallet.Domain.Entitys.TipoTransacao;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transacao {
     private Long id;
-    private String clienteId;
+    private Cliente cliente;
     private BigDecimal valor;
     private TipoTransacao tipo;
     private LocalDateTime data;
 
-    public Transacao(Long id, String clienteId, BigDecimal valor, TipoTransacao tipo, LocalDateTime data) {
+    public Transacao(Long id, Cliente cliente, BigDecimal valor, TipoTransacao tipo, LocalDateTime data) {
         this.id = id;
-        this.clienteId = clienteId;
+        this.cliente = cliente;
         this.valor = valor;
         this.tipo = tipo;
         this.data = data;
@@ -21,20 +24,20 @@ public class Transacao {
     public Transacao() {
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public Long getId() {
+        return id;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public TipoTransacao getTipo() {
-        return tipo;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setTipo(TipoTransacao tipo) {
-        this.tipo = tipo;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public BigDecimal getValor() {
@@ -45,19 +48,19 @@ public class Transacao {
         this.valor = valor;
     }
 
-    public String getClienteId() {
-        return clienteId;
+    public TipoTransacao getTipo() {
+        return tipo;
     }
 
-    public void setClienteId(String clienteId) {
-        this.clienteId = clienteId;
+    public void setTipo(TipoTransacao tipo) {
+        this.tipo = tipo;
     }
 
-    public Long getId() {
-        return id;
+    public LocalDateTime getData() {
+        return data;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setData(LocalDateTime data) {
+        this.data = data;
     }
 }
