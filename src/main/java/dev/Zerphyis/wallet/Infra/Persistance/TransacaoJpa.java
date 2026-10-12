@@ -1,6 +1,8 @@
-package dev.Zerphyis.wallet.Infra.Persistance;
+package dev.zerphyis.wallet.infra.persistence;
 
 import dev.Zerphyis.wallet.Domain.Entitys.TipoTransacao;
+import dev.Zerphyis.wallet.Infra.Persistance.ClienteJpa;
+import dev.zerphyis.wallet.domain.entities.TipoTransacao;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -13,8 +15,9 @@ public class TransacaoJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cliente_id", nullable = false)
-    private String clienteId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private ClienteJpa cliente;
 
     @Column(nullable = false)
     private BigDecimal valor;
@@ -26,31 +29,31 @@ public class TransacaoJpa {
     @Column(nullable = false)
     private LocalDateTime data;
 
-    public TransacaoJpa(Long id, String clienteId, BigDecimal valor, TipoTransacao tipo, LocalDateTime data) {
+    public TransacaoJpa() {
+    }
+
+    public TransacaoJpa(Long id, ClienteJpa cliente, BigDecimal valor, TipoTransacao tipo, LocalDateTime data) {
         this.id = id;
-        this.clienteId = clienteId;
+        this.cliente = cliente;
         this.valor = valor;
         this.tipo = tipo;
         this.data = data;
     }
 
-    public TransacaoJpa() {
+    public Long getId() {
+        return id;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
+    public ClienteJpa getCliente() {
+        return cliente;
     }
 
-    public TipoTransacao getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoTransacao tipo) {
-        this.tipo = tipo;
+    public void setCliente(ClienteJpa cliente) {
+        this.cliente = cliente;
     }
 
     public BigDecimal getValor() {
@@ -61,19 +64,19 @@ public class TransacaoJpa {
         this.valor = valor;
     }
 
-    public String getClienteId() {
-        return clienteId;
+    public TipoTransacao getTipo() {
+        return tipo;
     }
 
-    public void setClienteId(String clienteId) {
-        this.clienteId = clienteId;
+    public void setTipo(TipoTransacao tipo) {
+        this.tipo = tipo;
     }
 
-    public Long getId() {
-        return id;
+    public LocalDateTime getData() {
+        return data;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setData(LocalDateTime data) {
+        this.data = data;
     }
 }
