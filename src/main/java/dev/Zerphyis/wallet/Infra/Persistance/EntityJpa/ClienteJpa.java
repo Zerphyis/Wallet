@@ -1,4 +1,4 @@
-package dev.Zerphyis.wallet.Infra.Persistance;
+package dev.Zerphyis.wallet.Infra.Persistance.EntityJpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

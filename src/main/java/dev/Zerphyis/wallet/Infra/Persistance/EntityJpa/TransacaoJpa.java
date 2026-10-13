@@ -1,8 +1,6 @@
-package dev.zerphyis.wallet.infra.persistence;
+package dev.Zerphyis.wallet.Infra.Persistance.EntityJpa;
 
 import dev.Zerphyis.wallet.Domain.Entitys.TipoTransacao;
-import dev.Zerphyis.wallet.Infra.Persistance.ClienteJpa;
-import dev.zerphyis.wallet.domain.entities.TipoTransacao;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -28,7 +26,6 @@ public class TransacaoJpa {
 
     @Column(nullable = false)
     private LocalDateTime data;
-
     public TransacaoJpa() {
     }
 
