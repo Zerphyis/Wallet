@@ -11,4 +11,5 @@ public interface ClienteRepository {
     boolean existsByCpf(String cpf);
     Optional<Cliente> findById(UUID id);
     List<Cliente> findAll();
+    void deleteById(UUID id);
 }
