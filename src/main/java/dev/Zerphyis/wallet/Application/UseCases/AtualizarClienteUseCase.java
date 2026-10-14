@@ -2,7 +2,7 @@ package dev.Zerphyis.wallet.Application.UseCases;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
 import dev.Zerphyis.wallet.Application.Exceptions.ClienteNotFound;
-import dev.Zerphyis.wallet.Application.Exceptions.DuplicatacraException;
+import dev.Zerphyis.wallet.Application.Exceptions.DuplicatraException;
 import dev.Zerphyis.wallet.Application.InterfaceCases.AtualizarClienteInterfaceCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
@@ -22,7 +22,7 @@ public class AtualizarClienteUseCase implements AtualizarClienteInterfaceCase {
 
         if (!clienteExistente.getCpf().equals(requestDTO.cpf())) {
             if (clienteRepository.existsByCpf(requestDTO.cpf())) {
-                throw new DuplicatacraException("Já existe outro cliente cadastrado com este CPF.");
+                throw new DuplicatraException("Já existe outro cliente cadastrado com este CPF.");
             }
         }
 
