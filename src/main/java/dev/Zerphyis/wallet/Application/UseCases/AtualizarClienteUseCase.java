@@ -1,6 +1,8 @@
 package dev.Zerphyis.wallet.Application.UseCases;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
+import dev.Zerphyis.wallet.Application.Exceptions.ClienteNotFound;
+import dev.Zerphyis.wallet.Application.Exceptions.DuplicatraException;
 import dev.Zerphyis.wallet.Application.InterfaceCases.AtualizarClienteInterfaceCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
@@ -16,11 +18,11 @@ public class AtualizarClienteUseCase implements AtualizarClienteInterfaceCase {
 
     public Cliente execute(UUID id, ClienteRequestDto requestDTO) {
         Cliente clienteExistente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID informado."));
+                .orElseThrow(() -> new ClienteNotFound("Cliente não encontrado com o ID informado."));
 
         if (!clienteExistente.getCpf().equals(requestDTO.cpf())) {
             if (clienteRepository.existsByCpf(requestDTO.cpf())) {
-                throw new IllegalArgumentException("Já existe outro cliente cadastrado com este CPF.");
+                throw new DuplicatraException("Já existe outro cliente cadastrado com este CPF.");
             }
         }
 
