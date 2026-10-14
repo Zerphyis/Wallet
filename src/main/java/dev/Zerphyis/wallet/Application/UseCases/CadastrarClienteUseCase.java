@@ -1,6 +1,8 @@
 package dev.Zerphyis.wallet.Application.UseCases;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
+import dev.Zerphyis.wallet.Application.Exceptions.ClienteNotFound;
+import dev.Zerphyis.wallet.Application.Exceptions.DuplicatacraException;
 import dev.Zerphyis.wallet.Application.InterfaceCases.CadastraClienteInterfaceCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
@@ -16,7 +18,7 @@ public class CadastrarClienteUseCase implements CadastraClienteInterfaceCase {
 
     public Cliente execute(ClienteRequestDto requestDto) {
         if (repository.existsByCpf(requestDto.nome())) {
-            throw new IllegalArgumentException("Já existe um cliente cadastrado com este CPF.");
+            throw new DuplicatacraException("Já existe um cliente cadastrado com este CPF.");
 
         }
         Cliente novoCliente = new Cliente(
