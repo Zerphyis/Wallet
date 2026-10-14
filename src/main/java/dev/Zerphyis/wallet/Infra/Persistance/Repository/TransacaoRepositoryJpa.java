@@ -1,6 +1,6 @@
 package dev.Zerphyis.wallet.Infra.Persistance.Repository;
 
-import dev.zerphyis.wallet.infra.persistence.TransacaoJpa;
+import dev.Zerphyis.wallet.Infra.Persistance.EntityJpa.TransacaoJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
