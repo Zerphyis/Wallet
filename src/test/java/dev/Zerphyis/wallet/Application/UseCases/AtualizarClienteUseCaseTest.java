@@ -3,6 +3,7 @@ package dev.Zerphyis.wallet.Application.UseCases;
 import static org.junit.jupiter.api.Assertions.*;
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
 import dev.Zerphyis.wallet.Application.Exceptions.ClienteNotFound;
+import dev.Zerphyis.wallet.Application.Exceptions.DuplicatraException;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -56,5 +57,18 @@ class AtualizarClienteUseCaseTest {
         verify(clienteRepository, never()).save(any());
     }
 
+    @Test
+    @DisplayName("Bad Path: Deve lançar exceção ao alterar para um CPF já cadastrado por outro")
+    void deveLancarExcecaoCpfDuplicadoNaAtualizacao() {
+        UUID id = UUID.randomUUID();
+        Cliente clienteExistente = new Cliente(id, "Otávio", "11111111111");
+        ClienteRequestDto request = new ClienteRequestDto("Otávio", "22222222222");
+
+        when(clienteRepository.findById(id)).thenReturn(Optional.of(clienteExistente));
+        when(clienteRepository.existsByCpf("22222222222")).thenReturn(true);
+
+        assertThrows(DuplicatraException.class, () -> useCase.execute(id, request));
+        verify(clienteRepository, never()).save(any());
+    }
 }
 
