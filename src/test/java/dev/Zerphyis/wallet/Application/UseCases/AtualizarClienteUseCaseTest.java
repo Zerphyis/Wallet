@@ -2,6 +2,7 @@ package dev.Zerphyis.wallet.Application.UseCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
+import dev.Zerphyis.wallet.Application.Exceptions.ClienteNotFound;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -41,6 +43,17 @@ class AtualizarClienteUseCaseTest {
 
         assertEquals("Otávio Novo", atualizado.getNome());
         verify(clienteRepository).save(clienteExistente);
+    }
+
+    @Test
+    @DisplayName("Bad Path: Deve lançar exceção se cliente não for encontrado para atualização")
+    void deveLancarExcecaoClienteNaoEncontrado() {
+        UUID id = UUID.randomUUID();
+        ClienteRequestDto request = new ClienteRequestDto("Otávio", "12345678900");
+        when(clienteRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(ClienteNotFound.class, () -> useCase.execute(id, request));
+        verify(clienteRepository, never()).save(any());
     }
 
 }
