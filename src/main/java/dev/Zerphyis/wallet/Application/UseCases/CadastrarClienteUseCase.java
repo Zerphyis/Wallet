@@ -16,10 +16,10 @@ public class CadastrarClienteUseCase implements CadastraClienteInterfaceCase {
     }
 
     public Cliente execute(ClienteRequestDto requestDto) {
-        if (repository.existsByCpf(requestDto.nome())) {
+        if (repository.existsByCpf(requestDto.cpf())) {
             throw new DuplicatraException("Já existe um cliente cadastrado com este CPF.");
-
         }
+
         Cliente novoCliente = new Cliente(
                 UUID.randomUUID(),
                 requestDto.nome(),
@@ -29,6 +29,7 @@ public class CadastrarClienteUseCase implements CadastraClienteInterfaceCase {
         return repository.save(novoCliente);
     }
 }
+
 
 
 
