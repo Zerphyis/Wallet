@@ -34,15 +34,15 @@ class AtualizarClienteUseCaseTest {
     @DisplayName("Good Path: Deve atualizar o cliente com sucesso")
     void deveAtualizarClienteComSucesso() {
         UUID id = UUID.randomUUID();
-        Cliente clienteExistente = new Cliente(id, "Otávio Antigo", "12345678900");
-        ClienteRequestDto request = new ClienteRequestDto("Otávio Novo", "12345678900");
+        Cliente clienteExistente = new Cliente(id, "Marcus Antigo", "12345678900");
+        ClienteRequestDto request = new ClienteRequestDto("Marcus Novo", "12345678900");
 
         when(clienteRepository.findById(id)).thenReturn(Optional.of(clienteExistente));
         when(clienteRepository.save(any(Cliente.class))).thenAnswer(inv -> inv.getArgument(0));
 
         Cliente atualizado = useCase.execute(id, request);
 
-        assertEquals("Otávio Novo", atualizado.getNome());
+        assertEquals("Marcus Novo", atualizado.getNome());
         verify(clienteRepository).save(clienteExistente);
     }
 
@@ -50,7 +50,7 @@ class AtualizarClienteUseCaseTest {
     @DisplayName("Bad Path: Deve lançar exceção se cliente não for encontrado para atualização")
     void deveLancarExcecaoClienteNaoEncontrado() {
         UUID id = UUID.randomUUID();
-        ClienteRequestDto request = new ClienteRequestDto("Otávio", "12345678900");
+        ClienteRequestDto request = new ClienteRequestDto("Marcus", "12345678900");
         when(clienteRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(ClienteNotFound.class, () -> useCase.execute(id, request));
@@ -61,8 +61,8 @@ class AtualizarClienteUseCaseTest {
     @DisplayName("Bad Path: Deve lançar exceção ao alterar para um CPF já cadastrado por outro")
     void deveLancarExcecaoCpfDuplicadoNaAtualizacao() {
         UUID id = UUID.randomUUID();
-        Cliente clienteExistente = new Cliente(id, "Otávio", "11111111111");
-        ClienteRequestDto request = new ClienteRequestDto("Otávio", "22222222222");
+        Cliente clienteExistente = new Cliente(id, "Marcus", "11111111111");
+        ClienteRequestDto request = new ClienteRequestDto("Marcus", "22222222222");
 
         when(clienteRepository.findById(id)).thenReturn(Optional.of(clienteExistente));
         when(clienteRepository.existsByCpf("22222222222")).thenReturn(true);
