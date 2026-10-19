@@ -1,4 +1,4 @@
-package dev.Zerphyis.wallet.Application.InterfaceCases;
+package dev.Zerphyis.wallet.Application.InterfaceCases.Clientes;
 
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 
