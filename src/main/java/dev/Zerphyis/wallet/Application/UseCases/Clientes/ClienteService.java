@@ -1,4 +1,4 @@
-package dev.Zerphyis.wallet.Application.UseCases;
+package dev.Zerphyis.wallet.Application.UseCases.Clientes;
 
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
