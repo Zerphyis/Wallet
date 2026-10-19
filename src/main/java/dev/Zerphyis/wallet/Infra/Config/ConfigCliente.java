@@ -1,6 +1,6 @@
 package dev.Zerphyis.wallet.Infra.Config;
 
-import dev.Zerphyis.wallet.Application.UseCases.*;
+import dev.Zerphyis.wallet.Application.UseCases.Clientes.*;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
