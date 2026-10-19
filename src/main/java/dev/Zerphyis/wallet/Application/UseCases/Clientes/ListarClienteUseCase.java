@@ -1,6 +1,6 @@
-package dev.Zerphyis.wallet.Application.UseCases;
+package dev.Zerphyis.wallet.Application.UseCases.Clientes;
 
-import dev.Zerphyis.wallet.Application.InterfaceCases.ListarClienteInterfaceCase;
+import dev.Zerphyis.wallet.Application.InterfaceCases.Clientes.ListarClienteInterfaceCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 
