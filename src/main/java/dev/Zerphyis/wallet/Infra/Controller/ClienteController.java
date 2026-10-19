@@ -1,7 +1,7 @@
 package dev.Zerphyis.wallet.Infra.Controller;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
-import dev.Zerphyis.wallet.Application.UseCases.ClienteService;
+import dev.Zerphyis.wallet.Application.UseCases.Clientes.ClienteService;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -2,6 +2,7 @@ package dev.Zerphyis.wallet.Application.UseCases;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
 import dev.Zerphyis.wallet.Application.Exceptions.DuplicatraException;
+import dev.Zerphyis.wallet.Application.UseCases.Clientes.CadastrarClienteUseCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -10,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

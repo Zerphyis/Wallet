@@ -2,6 +2,7 @@ package dev.Zerphyis.wallet.Application.UseCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import dev.Zerphyis.wallet.Application.UseCases.Clientes.ListarClienteUseCase;
 import dev.Zerphyis.wallet.Domain.Entitys.Cliente;
 import dev.Zerphyis.wallet.Domain.Repository.ClienteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
