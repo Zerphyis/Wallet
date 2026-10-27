@@ -104,5 +104,90 @@ class RealizarTransacaoUseCaseTest {
         }
     }
 
+    @Nested
+    @DisplayName("Caminho Feliz (Sucesso na Execução)")
+    class CaminhoFelizTests {
 
+        @Test
+        @DisplayName("Deve realizar depósito com sucesso quando saldo for zero")
+        void deveRealizarDepositoComSucesso() {
+            when(repository.buscarPorCliente(idCliente)).thenReturn(Collections.emptyList());
+
+            Transacao deposito = new Transacao();
+            deposito.setCliente(cliente);
+            deposito.setValor(new BigDecimal("100.00"));
+            deposito.setTipo(TipoTransacao.DEPOSIT);
+
+            when(repository.salvarTransacao(any(Transacao.class))).thenAnswer(i -> i.getArgument(0));
+
+            Transacao resultado = useCase.executar(deposito);
+
+            assertNotNull(resultado);
+            assertEquals(new BigDecimal("100.00"), resultado.getValor());
+            verify(repository, times(1)).salvarTransacao(deposito);
+        }
+
+        @Test
+        @DisplayName("Deve realizar saque com sucesso quando houver saldo suficiente")
+        void deveRealizarSaqueComSucesso() {
+            Transacao depositoExistente = new Transacao();
+            depositoExistente.setValor(new BigDecimal("200.00"));
+            depositoExistente.setTipo(TipoTransacao.DEPOSIT);
+
+            when(repository.buscarPorCliente(idCliente)).thenReturn(List.of(depositoExistente));
+
+            Transacao saque = new Transacao();
+            saque.setCliente(cliente);
+            saque.setValor(new BigDecimal("150.00"));
+            saque.setTipo(TipoTransacao.WITHDRAWAL);
+
+            when(repository.salvarTransacao(any(Transacao.class))).thenAnswer(i -> i.getArgument(0));
+
+            Transacao resultado = useCase.executar(saque);
+
+            assertNotNull(resultado);
+            assertEquals(new BigDecimal("150.00"), resultado.getValor());
+            verify(repository, times(1)).salvarTransacao(saque);
+        }
+
+        @Test
+        @DisplayName("Deve atribuir a data atual automaticamente se a transação for recebida com data nula")
+        void devePreencherDataAtualQuandoNula() {
+            when(repository.buscarPorCliente(idCliente)).thenReturn(Collections.emptyList());
+
+            Transacao deposito = new Transacao();
+            deposito.setCliente(cliente);
+            deposito.setValor(new BigDecimal("50.00"));
+            deposito.setTipo(TipoTransacao.DEPOSIT);
+            deposito.setData(null);
+
+            when(repository.salvarTransacao(any(Transacao.class))).thenAnswer(i -> i.getArgument(0));
+
+            Transacao resultado = useCase.executar(deposito);
+
+            assertNotNull(resultado.getData());
+            assertTrue(resultado.getData().isBefore(LocalDateTime.now().plusSeconds(1)));
+            verify(repository, times(1)).salvarTransacao(deposito);
+        }
+
+        @Test
+        @DisplayName("Deve manter a data informada se a transação já contiver data definida")
+        void deveManterDataQuandoJaInformada() {
+            when(repository.buscarPorCliente(idCliente)).thenReturn(Collections.emptyList());
+
+            LocalDateTime dataOriginal = LocalDateTime.of(2026, 10, 20, 10, 0);
+            Transacao deposito = new Transacao();
+            deposito.setCliente(cliente);
+            deposito.setValor(new BigDecimal("50.00"));
+            deposito.setTipo(TipoTransacao.DEPOSIT);
+            deposito.setData(dataOriginal);
+
+            when(repository.salvarTransacao(any(Transacao.class))).thenAnswer(i -> i.getArgument(0));
+
+            Transacao resultado = useCase.executar(deposito);
+
+            assertEquals(dataOriginal, resultado.getData());
+            verify(repository, times(1)).salvarTransacao(deposito);
+        }
+    }
 }
