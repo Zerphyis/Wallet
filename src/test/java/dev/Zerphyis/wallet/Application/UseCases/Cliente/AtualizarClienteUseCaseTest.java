@@ -1,4 +1,4 @@
-package dev.Zerphyis.wallet.Application.UseCases;
+package dev.Zerphyis.wallet.Application.UseCases.Cliente;
 
 import static org.junit.jupiter.api.Assertions.*;
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;

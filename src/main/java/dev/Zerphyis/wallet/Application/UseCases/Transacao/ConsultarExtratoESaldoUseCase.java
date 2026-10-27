@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public class ConsultarExtratoESaldeUseCase implements ConsultarExtratoESaldoInterfaceCase {
+public class ConsultarExtratoESaldoUseCase implements ConsultarExtratoESaldoInterfaceCase {
 
     private final TransacaoRepository repository;
 
-    public ConsultarExtratoESaldeUseCase(TransacaoRepository repository) {
+    public ConsultarExtratoESaldoUseCase(TransacaoRepository repository) {
         this.repository = repository;
     }
 
