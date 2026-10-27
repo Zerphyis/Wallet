@@ -59,7 +59,51 @@ class ConsultarExtratoESaldeUseCaseTest {
             verify(repository, times(1)).buscarPorCliente(idCliente);
         }
 
+        @Test
+        @DisplayName("Deve retornar extrato com saldo zero quando o cliente não possuir histórico de transações")
+        void deveRetornarExtratoComSaldoZeroQuandoListaVazia() {
+            when(repository.buscarPorCliente(idCliente)).thenReturn(Collections.emptyList());
 
+            ExtratoResponse response = useCase.executar(idCliente);
+
+            assertNotNull(response);
+            assertEquals(idCliente, response.idCliente());
+            assertEquals(BigDecimal.ZERO, response.saldoConsolidado());
+            assertTrue(response.transacoes().isEmpty());
+
+            verify(repository, times(1)).buscarPorCliente(idCliente);
+        }
+    }
+
+    @Nested
+    @DisplayName("Caminhos do método consultarSaldoApenas")
+    class ConsultarSaldoApenasTests {
+
+        @Test
+        @DisplayName("Deve calcular e retornar apenas o saldo quando existirem transações")
+        void deveRetornarApenasOSaldoConsolidado() {
+            Transacao deposito1 = criarTransacao(new BigDecimal("100.00"), TipoTransacao.DEPOSIT);
+            Transacao deposito2 = criarTransacao(new BigDecimal("50.00"), TipoTransacao.DEPOSIT);
+
+            when(repository.buscarPorCliente(idCliente)).thenReturn(List.of(deposito1, deposito2));
+
+            BigDecimal saldo = useCase.consultarSaldoApenas(idCliente);
+
+            assertEquals(new BigDecimal("150.00"), saldo);
+            verify(repository, times(1)).buscarPorCliente(idCliente);
+        }
+
+        @Test
+        @DisplayName("Deve retornar zero para saldo apenas quando cliente não possuir transações")
+        void deveRetornarZeroQuandoNaoHouverTransacoes() {
+            when(repository.buscarPorCliente(idCliente)).thenReturn(Collections.emptyList());
+
+            BigDecimal saldo = useCase.consultarSaldoApenas(idCliente);
+
+            assertEquals(BigDecimal.ZERO, saldo);
+            verify(repository, times(1)).buscarPorCliente(idCliente);
+        }
+    }
 
     private Transacao criarTransacao(BigDecimal valor, TipoTransacao tipo) {
         Transacao transacao = new Transacao();
