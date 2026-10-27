@@ -1,4 +1,4 @@
-package dev.Zerphyis.wallet.Application.UseCases;
+package dev.Zerphyis.wallet.Application.UseCases.Cliente;
 
 import dev.Zerphyis.wallet.Application.Dto.ClienteRequestDto;
 import dev.Zerphyis.wallet.Application.Exceptions.DuplicatraException;
